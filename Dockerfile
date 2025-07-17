@@ -1,15 +1,13 @@
-FROM node:18-alpine as build
+FROM node:18-alpine
 
 WORKDIR /app
+
 COPY package*.json ./
 RUN npm install
+
 COPY . .
-RUN npm run build
 
-FROM nginx:alpine
-
-COPY --from=build /app/build /usr/share/nginx/html
-
+# Don't run build here — do it in CMD so env vars are available
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["sh", "-c", "npm run build && npx serve -s build -l $PORT"]
