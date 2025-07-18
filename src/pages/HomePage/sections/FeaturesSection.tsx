@@ -52,7 +52,7 @@ const FeaturesSection: React.FC = () => {
           display="flex"
           justifyContent="center"
         >
-          {data.features.map((feature, idx) => (
+          {data.features.map((feature) => (
             <Grid
               key={feature.title}
               size={{ xs: 12, sm: 6, md: 4 }}

@@ -1,23 +1,22 @@
-import React from "react";
+import {
+  Add,
+  EmojiEvents,
+  Event,
+  LocationOn,
+  SportsBasketball,
+} from "@mui/icons-material";
 import {
   Box,
-  Container,
-  Typography,
   Button,
   Card,
   CardContent,
   Chip,
+  Container,
   Stack,
+  Typography,
 } from "@mui/material";
-import {
-  Event,
-  Add,
-  LocationOn,
-  AccessTime,
-  SportsBasketball,
-  EmojiEvents,
-} from "@mui/icons-material";
 import { motion } from "framer-motion";
+import React from "react";
 
 const GamesPage: React.FC = () => {
   const games = [

@@ -1,5 +1,15 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosError,
+  InternalAxiosRequestConfig,
+} from "axios";
 import { API_BASE_URL, STORAGE_KEYS } from "../config/constants";
+
+interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
 
 class ApiService {
   private axiosInstance: AxiosInstance;
@@ -32,10 +42,16 @@ class ApiService {
     // Response interceptor to handle errors and token refresh
     this.axiosInstance.interceptors.response.use(
       (response) => response,
-      async (error) => {
-        const originalRequest = error.config;
+      async (error: AxiosError) => {
+        const originalRequest = error.config as
+          | CustomAxiosRequestConfig
+          | undefined;
 
-        if (error.response?.status === 401 && !originalRequest._retry) {
+        if (
+          originalRequest &&
+          error.response?.status === 401 &&
+          !originalRequest._retry
+        ) {
           originalRequest._retry = true;
 
           try {
@@ -43,7 +59,7 @@ class ApiService {
               STORAGE_KEYS.REFRESH_TOKEN
             );
             if (refreshToken) {
-              const response = await axios.post(
+              const response = await axios.post<{ accessToken: string }>(
                 `${API_BASE_URL}/api/auth/refresh`,
                 {
                   refreshToken,
@@ -53,11 +69,12 @@ class ApiService {
               const { accessToken } = response.data;
               localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
 
-              originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+              if (originalRequest.headers) {
+                originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+              }
               return this.axiosInstance(originalRequest);
             }
-          } catch (refreshError) {
-            // Refresh failed, redirect to login
+          } catch {
             localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
             localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
             localStorage.removeItem(STORAGE_KEYS.USER);
@@ -78,9 +95,9 @@ class ApiService {
     return response.data;
   }
 
-  async post<T>(
+  async post<T, D extends object>(
     url: string,
-    data?: any,
+    data: D,
     config?: AxiosRequestConfig
   ): Promise<T> {
     const response: AxiosResponse<T> = await this.axiosInstance.post(
@@ -91,9 +108,9 @@ class ApiService {
     return response.data;
   }
 
-  async put<T>(
+  async put<T, D extends object>(
     url: string,
-    data?: any,
+    data: D,
     config?: AxiosRequestConfig
   ): Promise<T> {
     const response: AxiosResponse<T> = await this.axiosInstance.put(
@@ -104,9 +121,9 @@ class ApiService {
     return response.data;
   }
 
-  async patch<T>(
+  async patch<T, D extends object>(
     url: string,
-    data?: any,
+    data: D,
     config?: AxiosRequestConfig
   ): Promise<T> {
     const response: AxiosResponse<T> = await this.axiosInstance.patch(

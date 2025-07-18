@@ -1,10 +1,10 @@
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import React from "react";
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
 
-type ControlledTextFieldProps = {
-  name: string;
-  control: Control<any>;
+type ControlledTextFieldProps<T extends FieldValues> = {
+  name: Path<T>;
+  control: Control<T>;
   label: string;
   type?: string;
   error?: boolean;
@@ -14,7 +14,7 @@ type ControlledTextFieldProps = {
   onEndIconClick?: () => void;
 };
 
-export default function ControlledTextField({
+export default function ControlledTextField<T extends FieldValues>({
   name,
   control,
   label,
@@ -24,7 +24,7 @@ export default function ControlledTextField({
   startIcon,
   endIcon,
   onEndIconClick,
-}: ControlledTextFieldProps) {
+}: ControlledTextFieldProps<T>) {
   return (
     <Controller
       name={name}

@@ -1,31 +1,29 @@
 import React, { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  Box,
-  CardContent,
-  Button,
-  Typography,
-  Link,
-  Alert,
-  CircularProgress,
-  Container,
-  Paper,
-} from "@mui/material";
-import {
-  Visibility,
-  VisibilityOff,
-  Person,
   Email,
   Lock,
+  Person,
   PersonAdd,
+  Visibility,
+  VisibilityOff,
 } from "@mui/icons-material";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Alert,
+  Box,
+  Button,
+  CardContent,
+  CircularProgress,
+  Link,
+  Typography,
+} from "@mui/material";
+import { useForm } from "react-hook-form";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import ControlledTextField from "../../components/shared/ControlledTextField";
+import FormContainer from "../../components/shared/FormContainer";
 import { useRegister } from "../../hooks/api/authentification";
 import { APIErrorBase } from "../../types/api";
-import FormContainer from "../../components/shared/FormContainer";
-import ControlledTextField from "../../components/shared/ControlledTextField";
 
 const registerSchema = z
   .object({
@@ -79,25 +77,23 @@ export default function RegisterForm() {
   });
 
   const onSubmit = (data: RegisterFormData) => {
-    const { confirmPassword, ...registerData } = data;
-    registerMutation.mutate(
-      { ...registerData },
-      {
-        onSuccess: () => {
-          navigate("/dashboard");
-        },
-        onError: (error: APIErrorBase) => {
-          const errorMessage =
-            error.response.data.message ||
-            "Registration failed. Please try again.";
+    const { confirmPassword: _, ...registerData } = data;
 
-          setError("root", {
-            type: "server",
-            message: errorMessage,
-          });
-        },
-      }
-    );
+    registerMutation.mutate(registerData, {
+      onSuccess: () => {
+        navigate("/dashboard");
+      },
+      onError: (error: APIErrorBase) => {
+        const errorMessage =
+          error.response.data.message ||
+          "Registration failed. Please try again.";
+
+        setError("root", {
+          type: "server",
+          message: errorMessage,
+        });
+      },
+    });
   };
 
   const togglePasswordVisibility = () => {

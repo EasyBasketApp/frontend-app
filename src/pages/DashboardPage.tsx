@@ -1,32 +1,30 @@
-import React from "react";
 import {
-  Box,
-  Container,
-  Typography,
-  Card,
-  CardContent,
-  Button,
-  Paper,
-  Avatar,
-  Chip,
-  Stack,
-  LinearProgress,
-} from "@mui/material";
-import {
+  Add,
   Dashboard as DashboardIcon,
+  EmojiEvents,
+  Event,
   Group,
   SportsBasketball,
-  TrendingUp,
-  Event,
-  Add,
   Timeline,
-  EmojiEvents,
-  Star,
+  TrendingUp,
   Whatshot,
 } from "@mui/icons-material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  Container,
+  LinearProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { motion } from "framer-motion";
-import { useAuth } from "../contexts/AuthContext";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
@@ -135,10 +133,11 @@ const DashboardPage: React.FC = () => {
         >
           <Box sx={{ mb: 6 }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-              <Avatar 
-                sx={{ 
+              <Avatar
+                sx={{
                   bgcolor: "transparent",
-                  background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                  background:
+                    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                   mr: 3,
                   width: 64,
                   height: 64,
@@ -147,14 +146,20 @@ const DashboardPage: React.FC = () => {
                 <DashboardIcon sx={{ fontSize: 32 }} />
               </Avatar>
               <Box>
-                <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
+                <Typography
+                  variant="h3"
+                  component="h1"
+                  gutterBottom
+                  sx={{ fontWeight: 700 }}
+                >
                   Welcome back, {user?.username}!
                 </Typography>
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Chip
                     label={user?.role}
                     sx={{
-                      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                      background:
+                        "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                       color: "white",
                       fontWeight: 600,
                       textTransform: "capitalize",
@@ -164,7 +169,8 @@ const DashboardPage: React.FC = () => {
                     icon={<Whatshot />}
                     label="On Fire!"
                     sx={{
-                      background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+                      background:
+                        "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
                       color: "white",
                       fontWeight: 600,
                     }}
@@ -185,13 +191,21 @@ const DashboardPage: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
         >
           <Box sx={{ mb: 6 }}>
-            <Typography variant="h4" gutterBottom sx={{ fontWeight: 600, mb: 4 }}>
+            <Typography
+              variant="h4"
+              gutterBottom
+              sx={{ fontWeight: 600, mb: 4 }}
+            >
               Performance Overview
             </Typography>
             <Box
               sx={{
                 display: "grid",
-                gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", lg: "1fr 1fr 1fr 1fr" },
+                gridTemplateColumns: {
+                  xs: "1fr",
+                  sm: "1fr 1fr",
+                  lg: "1fr 1fr 1fr 1fr",
+                },
                 gap: 3,
               }}
             >
@@ -225,12 +239,27 @@ const DashboardPage: React.FC = () => {
                       }}
                     />
                     <CardContent sx={{ position: "relative" }}>
-                      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 2 }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "flex-start",
+                          mb: 2,
+                        }}
+                      >
                         <Box>
-                          <Typography color="inherit" gutterBottom sx={{ opacity: 0.9 }}>
+                          <Typography
+                            color="inherit"
+                            gutterBottom
+                            sx={{ opacity: 0.9 }}
+                          >
                             {stat.title}
                           </Typography>
-                          <Typography variant="h3" component="div" sx={{ fontWeight: 800 }}>
+                          <Typography
+                            variant="h3"
+                            component="div"
+                            sx={{ fontWeight: 800 }}
+                          >
                             {stat.value}
                           </Typography>
                         </Box>
@@ -257,7 +286,11 @@ const DashboardPage: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <Box sx={{ mb: 6 }}>
-            <Typography variant="h4" gutterBottom sx={{ fontWeight: 600, mb: 4 }}>
+            <Typography
+              variant="h4"
+              gutterBottom
+              sx={{ fontWeight: 600, mb: 4 }}
+            >
               Quick Actions
             </Typography>
             <Box
@@ -284,7 +317,9 @@ const DashboardPage: React.FC = () => {
                     onClick={action.action}
                   >
                     <CardContent sx={{ p: 4 }}>
-                      <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+                      <Box
+                        sx={{ display: "flex", alignItems: "center", mb: 3 }}
+                      >
                         <Box
                           sx={{
                             p: 2,
@@ -296,11 +331,19 @@ const DashboardPage: React.FC = () => {
                         >
                           {action.icon}
                         </Box>
-                        <Typography variant="h6" component="h3" sx={{ fontWeight: 600 }}>
+                        <Typography
+                          variant="h6"
+                          component="h3"
+                          sx={{ fontWeight: 600 }}
+                        >
                           {action.title}
                         </Typography>
                       </Box>
-                      <Typography variant="body2" color="text.secondary" sx={{ mb: 3, lineHeight: 1.6 }}>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ mb: 3, lineHeight: 1.6 }}
+                      >
                         {action.description}
                       </Typography>
                       <Button
@@ -342,7 +385,11 @@ const DashboardPage: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <Box>
-              <Typography variant="h4" gutterBottom sx={{ fontWeight: 600, mb: 3 }}>
+              <Typography
+                variant="h4"
+                gutterBottom
+                sx={{ fontWeight: 600, mb: 3 }}
+              >
                 Recent Activity
               </Typography>
               <Card>
@@ -352,7 +399,10 @@ const DashboardPage: React.FC = () => {
                       key={index}
                       sx={{
                         p: 3,
-                        borderBottom: index < recentActivities.length - 1 ? "1px solid rgba(0,0,0,0.1)" : "none",
+                        borderBottom:
+                          index < recentActivities.length - 1
+                            ? "1px solid rgba(0,0,0,0.1)"
+                            : "none",
                         "&:hover": {
                           backgroundColor: "rgba(0,0,0,0.02)",
                         },
@@ -383,14 +433,27 @@ const DashboardPage: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <Box>
-              <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, mb: 3 }}>
+              <Typography
+                variant="h5"
+                gutterBottom
+                sx={{ fontWeight: 600, mb: 3 }}
+              >
                 Team Performance
               </Typography>
               <Card>
                 <CardContent>
                   {teamPerformance.map((team, index) => (
-                    <Box key={index} sx={{ mb: index < teamPerformance.length - 1 ? 3 : 0 }}>
-                      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+                    <Box
+                      key={index}
+                      sx={{ mb: index < teamPerformance.length - 1 ? 3 : 0 }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          mb: 1,
+                        }}
+                      >
                         <Typography variant="body1" sx={{ fontWeight: 500 }}>
                           {team.name}
                         </Typography>

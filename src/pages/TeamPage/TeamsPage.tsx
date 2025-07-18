@@ -1,28 +1,19 @@
-import React from "react";
+import { Add, Group, Star, TrendingUp } from "@mui/icons-material";
 import {
+  Avatar,
   Box,
-  Container,
-  Typography,
   Button,
   Card,
   CardContent,
-  Avatar,
-  Stack,
   Chip,
+  Container,
+  Stack,
+  Typography,
 } from "@mui/material";
-import {
-  Group,
-  Add,
-  TrendingUp,
-  Star,
-  SportsBasketball,
-} from "@mui/icons-material";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 
 const TeamsPage: React.FC = () => {
-  const navigate = useNavigate();
-
   const teams = [
     {
       name: "Lakers",

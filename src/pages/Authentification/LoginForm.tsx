@@ -1,30 +1,28 @@
 import React, { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  Box,
-  CardContent,
-  Button,
-  Typography,
-  Link,
-  Alert,
-  CircularProgress,
-  Container,
-  Paper,
-} from "@mui/material";
-import {
-  Visibility,
-  VisibilityOff,
   Email,
   Lock,
   Login as LoginIcon,
+  Visibility,
+  VisibilityOff,
 } from "@mui/icons-material";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Alert,
+  Box,
+  Button,
+  CardContent,
+  CircularProgress,
+  Link,
+  Typography,
+} from "@mui/material";
+import { useForm } from "react-hook-form";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import ControlledTextField from "../../components/shared/ControlledTextField";
+import FormContainer from "../../components/shared/FormContainer";
 import { useLogin } from "../../hooks/api/authentification";
 import { APIErrorBase } from "../../types/api";
-import FormContainer from "../../components/shared/FormContainer";
-import ControlledTextField from "../../components/shared/ControlledTextField";
 
 // Validation schema
 const loginSchema = z.object({
@@ -157,7 +155,7 @@ export default function LoginForm() {
 
           <Box sx={{ textAlign: "center", mt: 2 }}>
             <Typography variant="body2" color="text.secondary">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link
                 component={RouterLink}
                 to="/register"

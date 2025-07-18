@@ -1,25 +1,18 @@
-import React from "react";
+import { Add, Height, Person } from "@mui/icons-material";
 import {
+  Avatar,
   Box,
-  Container,
-  Typography,
   Button,
   Card,
   CardContent,
-  Avatar,
-  Stack,
   Chip,
+  Container,
   LinearProgress,
+  Stack,
+  Typography,
 } from "@mui/material";
-import {
-  Person,
-  Add,
-  TrendingUp,
-  Star,
-  Height,
-  Speed,
-} from "@mui/icons-material";
 import { motion } from "framer-motion";
+import React from "react";
 
 const PlayersPage: React.FC = () => {
   const players = [
