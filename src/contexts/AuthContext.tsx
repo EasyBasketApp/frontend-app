@@ -1,12 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react'
 import { STORAGE_KEYS } from '../config/constants'
-
-interface User {
-  id: string
-  username: string
-  email: string
-  role: string
-}
+import { User } from '../types/api/user'
 
 interface AuthContextType {
   user: User | null

@@ -3,6 +3,7 @@ import { API_ENDPOINTS } from '../../config/constants'
 import { useAuth } from '../../contexts/AuthContext'
 import apiService from '../../services/apiService'
 import { APIErrorBase } from '../../types/api'
+import { UserRole } from '../../types/api/user'
 
 interface AuthResponse {
   accessToken: string
@@ -10,7 +11,7 @@ interface AuthResponse {
     id: number
     username: string
     email: string
-    role: string
+    role: UserRole
   }
   message?: string
 }
@@ -24,7 +25,7 @@ interface RegisterData {
   username: string
   email: string
   password: string
-  role?: string
+  role?: UserRole
 }
 
 // Auth hooks
@@ -33,7 +34,7 @@ export const useLogin = () => {
 
   return useMutation<AuthResponse, APIErrorBase, LoginCredentials>({
     mutationFn: async (credentials: LoginCredentials) => {
-      const response = await apiService.post<AuthResponse>(API_ENDPOINTS.AUTH.LOGIN, credentials)
+      const response = await apiService.post<AuthResponse, LoginCredentials>(API_ENDPOINTS.AUTH.LOGIN, credentials)
       return response
     },
     onSuccess: data => {
@@ -56,7 +57,7 @@ export const useRegister = () => {
 
   return useMutation<AuthResponse, APIErrorBase, RegisterData>({
     mutationFn: async (userData: RegisterData) => {
-      return await apiService.post<AuthResponse>(API_ENDPOINTS.AUTH.REGISTER, userData)
+      return await apiService.post<AuthResponse, LoginCredentials>(API_ENDPOINTS.AUTH.REGISTER, userData)
     },
     onSuccess: data => {
       if (data.accessToken && data.user) {
