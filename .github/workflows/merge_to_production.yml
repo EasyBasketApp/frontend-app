@@ -1,0 +1,38 @@
+name: Merge to Production branch
+on:
+  schedule:
+    - cron: "0 9 * * *" # Every day at 9 AM UTC
+  workflow_dispatch:
+
+jobs:
+  merge_to_production:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for changes between main and production
+        id: check_diff
+        uses: ./.github/workflows/reusable/check_diff.yml
+        with:
+          base_branch: production
+          compare_branch: main
+      - name: Exit if no changes
+        if: steps.check_diff.outputs.has_changes == 'false'
+        run: echo "No changes detected. Exiting workflow." && exit 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install
+      - name: Build the application
+        run: npm run build
+      - name: Run tests
+        run: npm test -- --watchAll=false
+      - name: Merge to production branch
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email ""
+          git checkout -b production
+          git merge main --no-ff -m "Merge main into production"
+          git push origin production
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
