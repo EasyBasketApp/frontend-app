@@ -14,12 +14,7 @@ jobs:
         with:
           node-version: '22'
       - name: Cache Node.js modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-modules-
+        uses: ./.github/workflows/cache_node_modules.yml
       - name: Install dependencies
         run: npm install
       - name: Run lint
