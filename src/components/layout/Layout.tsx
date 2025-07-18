@@ -1,25 +1,25 @@
-import React from "react";
-import { Box } from "@mui/material";
-import Header from "./Header";
-import Footer from "./Footer";
+import React from 'react'
+import { Box } from '@mui/material'
+import Header from './Header'
+import Footer from './Footer'
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
       }}
     >
       <Header />
 
       <Box
-        component="main"
+        component='main'
         sx={{
           flexGrow: 1,
           py: 3,
@@ -30,7 +30,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       <Footer />
     </Box>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

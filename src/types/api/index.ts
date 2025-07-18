@@ -1,14 +1,14 @@
 export type APIErrorBase = {
-  code: string;
-  message: string;
-  name: string;
-  status: number;
-  stack: string;
+  code: string
+  message: string
+  name: string
+  status: number
+  stack: string
   response: {
     data: {
-      message: string;
-      error: string;
-      statusCode: number;
-    };
-  };
-};
+      message: string
+      error: string
+      statusCode: number
+    }
+  }
+}
