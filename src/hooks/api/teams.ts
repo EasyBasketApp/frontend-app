@@ -28,7 +28,8 @@ export const useCreateTeam = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (teamData: CreateTeamPayload) => apiService.post(API_ENDPOINTS.TEAMS.BASE, teamData),
+    mutationFn: (teamData: CreateTeamPayload) =>
+      apiService.post<Team, CreateTeamPayload>(API_ENDPOINTS.TEAMS.BASE, teamData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.TEAMS.LIST })
     },

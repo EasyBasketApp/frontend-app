@@ -3,7 +3,11 @@ import { Typography, Button } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
 
-export default function TeamPageHeader() {
+interface TeamPageHeaderProps {
+  onCreateTeam: () => void
+}
+
+export default function TeamPageHeader({ onCreateTeam }: TeamPageHeaderProps) {
   return (
     <>
       <Box
@@ -20,6 +24,7 @@ export default function TeamPageHeader() {
         <Button
           variant='contained'
           startIcon={<Add />}
+          onClick={onCreateTeam}
           sx={{
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             px: 4,

@@ -6,9 +6,10 @@ import TeamCard from './TeamCard'
 
 interface TeamCardContentProps {
   teams: Team[]
+  onCreateTeam: () => void
 }
 
-export default function TeamCardContent({ teams }: TeamCardContentProps) {
+export default function TeamCardContent({ teams, onCreateTeam }: TeamCardContentProps) {
   return (
     <Box
       sx={{
@@ -24,7 +25,7 @@ export default function TeamCardContent({ teams }: TeamCardContentProps) {
       {teams && teams.length > 0 ? (
         teams.map((team, index) => <TeamCard key={team.id} team={team} index={index} />)
       ) : (
-        <NoTeamContent />
+        <NoTeamContent onCreateTeam={onCreateTeam} />
       )}
     </Box>
   )
