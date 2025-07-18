@@ -1,0 +1,19 @@
+name: Automated checks
+
+on:
+  pull_request:
+    branches:
+      - main
+  branch:
+    branches:
+      - main
+
+jobs:
+  - name: Run tests
+    uses: ./.github/workflows/run_tests.yml
+  - name: Run lint
+    needs: Run tests
+    uses: ./.github/workflows/run_lint.yml
+  - name: Run formatting
+    needs: Run lint
+    uses: ./.github/workflows/run_format.yml
