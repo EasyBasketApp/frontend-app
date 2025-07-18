@@ -4,16 +4,15 @@ on:
   pull_request:
     branches:
       - main
-  branches:
-    branches:
-      - main
+  push:
+    - main
 
 jobs:
-  - name: Run tests
-    uses: ./.github/workflows/run_tests.yml
   - name: Run lint
-    needs: Run tests
     uses: ./.github/workflows/run_lint.yml
   - name: Run formatting
     needs: Run lint
     uses: ./.github/workflows/run_format.yml
+  - name: Run tests
+    needs: Run formatting
+    uses: ./.github/workflows/run_tests.yml
