@@ -20,11 +20,11 @@ import LoadingSpinner from "./components/common/LoadingSpinner";
 // Pages
 import HomePage from "./pages/HomePage/HomePage";
 import DashboardPage from "./pages/DashboardPage";
-import TeamsPage from "./pages/TeamsPage";
+import TeamsPage from "./pages/TeamPage/TeamsPage";
 import PlayersPage from "./pages/PlayersPage";
 import GamesPage from "./pages/GamesPage";
-import LoginForm from "./components/auth/LoginForm";
-import RegisterForm from "./components/auth/RegisterForm";
+import LoginForm from "./pages/Authentification/LoginForm";
+import RegisterForm from "./pages/Authentification/RegisterForm";
 
 // Protected Route Component
 interface ProtectedRouteProps {
