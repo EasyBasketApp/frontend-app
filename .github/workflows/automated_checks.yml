@@ -9,11 +9,14 @@ on:
       - main
 
 jobs:
-  - name: Run lint
+  run_lint:
+    name: Run lint
     uses: ./.github/workflows/run_lint.yml
-  - name: Run formatting
-    needs: Run lint
+  run_formatting:
+    name: Run formatting
+    needs: run_lint
     uses: ./.github/workflows/run_format.yml
-  - name: Run tests
-    needs: Run formatting
+  run_tests:
+    name: Run tests
+    needs: run_formatting
     uses: ./.github/workflows/run_tests.yml
