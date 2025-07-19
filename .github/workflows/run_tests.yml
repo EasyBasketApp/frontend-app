@@ -16,7 +16,12 @@ jobs:
           node-version: '22'
 
       - name: Cache Node.js modules
-        uses: ./.github/workflows/cache_node_modules.yml
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
 
       - name: Install dependencies
         run: npm install
