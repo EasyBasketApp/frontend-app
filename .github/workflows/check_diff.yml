@@ -25,20 +25,9 @@ jobs:
       - name: Check for changes between branches
         id: check_diff
         run: |
-          # Fetch all branches
           git fetch origin
-
-          # Check if base branch exists remotely
-          if git show-ref --verify --quiet refs/remotes/origin/${{ inputs.base_branch }}; then
-            echo "Base branch ${{ inputs.base_branch }} exists, comparing with ${{ inputs.compare_branch }}"
-            if git diff --quiet origin/${{ inputs.base_branch }}..origin/${{ inputs.compare_branch }}; then
-              echo "has_changes=false" >> $GITHUB_OUTPUT
-              echo "No changes detected between branches"
-            else
-              echo "has_changes=true" >> $GITHUB_OUTPUT
-              echo "Changes detected between branches"
-            fi
+          if git diff --quiet origin/${{ inputs.base_branch }}..origin/${{ inputs.compare_branch }}; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
           else
-            echo "Base branch ${{ inputs.base_branch }} does not exist, assuming changes needed"
             echo "has_changes=true" >> $GITHUB_OUTPUT
           fi
