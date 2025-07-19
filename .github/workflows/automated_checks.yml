@@ -1,0 +1,18 @@
+name: Automated checks
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  run_lint:
+    name: Run lint
+    uses: ./.github/workflows/run_lint.yml
+  run_formatting:
+    name: Run formatting
+    needs: run_lint
+    uses: ./.github/workflows/run_format.yml

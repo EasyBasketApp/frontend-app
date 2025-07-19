@@ -1,0 +1,33 @@
+name: Check for Changes
+
+on:
+  workflow_call:
+    inputs:
+      base_branch:
+        required: true
+        type: string
+      compare_branch:
+        required: true
+        type: string
+    outputs:
+      has_changes:
+        description: 'Whether there are changes between the branches'
+        value: ${{ jobs.check_diff.outputs.has_changes }}
+
+jobs:
+  check_diff:
+    runs-on: ubuntu-latest
+    outputs:
+      has_changes: ${{ steps.check_diff.outputs.has_changes }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Check for changes between branches
+        id: check_diff
+        run: |
+          git fetch origin
+          if git diff --quiet origin/${{ inputs.base_branch }}..origin/${{ inputs.compare_branch }}; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi

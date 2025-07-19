@@ -1,0 +1,54 @@
+name: Merge to Production branch
+on:
+  schedule:
+    - cron: '0 9 * * *' # Every day at 9 AM UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  check_changes:
+    uses: ./.github/workflows/check_diff.yml
+    with:
+      base_branch: production
+      compare_branch: main
+
+  merge_to_production:
+    needs: check_changes
+    if: needs.check_changes.outputs.has_changes == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+      - name: Install dependencies
+        run: npm install
+      - name: Build the application
+        run: npm run build
+      - name: Merge to production branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin
+          git checkout -b production origin/production
+
+          git merge origin/main --no-ff -m "Merge main into production - $(date)"
+          git push origin production
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
