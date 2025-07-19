@@ -8,6 +8,8 @@ jobs:
   merge_to_production:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Check for changes between main and production
         id: check_diff
         uses: ./.github/workflows/check_diff.yml
