@@ -24,7 +24,7 @@ jobs:
           git fetch origin ${{ inputs.base_branch }} ${{ inputs.compare_branch }}
           git checkout ${{ inputs.base_branch }}
           if git diff --quiet origin/${{ inputs.base_branch }}..origin/${{ inputs.compare_branch }}; then
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-          else
             echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
           fi

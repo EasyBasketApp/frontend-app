@@ -39,9 +39,18 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git fetch origin production || git checkout -b production
-          git checkout production
-          git merge main --no-ff -m "Merge main into production - $(date)"
+
+          git fetch origin
+          if git show-ref --verify --quiet refs/remotes/origin/production; then
+            echo "Production branch exists remotely, checking it out"
+            git checkout -b production origin/production
+          else
+            echo "Production branch does not exist, creating it from main"
+            git checkout -b production
+          fi
+
+          git merge origin/main --no-ff -m "Merge main into production - $(date)"
+
           git push origin production
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
