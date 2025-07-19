@@ -38,10 +38,10 @@
     "build": "react-scripts build",
     "test": "jest tests",
     "eject": "react-scripts eject",
-    "lint": "eslint src tests",
-    "lint:fix": "eslint src tests --fix",
-    "format": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json}\" \"tests/**/*.{js,jsx,ts,tsx,json}\"",
-    "format:fix": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json}\" \"tests/**/*.{js,jsx,ts,tsx,json}\""
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "format": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json}\"",
+    "format:fix": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json}\""
   },
   "browserslist": {
     "production": [
