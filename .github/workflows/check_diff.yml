@@ -9,6 +9,10 @@ on:
       compare_branch:
         required: true
         type: string
+    outputs:
+      has_changes:
+        description: 'Whether there are changes between the branches'
+        value: ${{ jobs.check_diff.outputs.has_changes }}
 
 jobs:
   check_diff:
