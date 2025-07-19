@@ -38,6 +38,10 @@ jobs:
             ${{ runner.os }}-node-modules-
       - name: Install dependencies
         run: npm install
+      - name: Run linter
+        uses: ./.github/workflows/run_lint.yml
+      - name: Run formatting
+        uses: ./.github/workflows/run_format.yml
       - name: Build the application
         run: npm run build
       - name: Merge to production branch
