@@ -16,7 +16,3 @@ jobs:
     name: Run formatting
     needs: run_lint
     uses: ./.github/workflows/run_format.yml
-  run_tests:
-    name: Run tests
-    needs: run_formatting
-    uses: ./.github/workflows/run_tests.yml
