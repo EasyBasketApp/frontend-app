@@ -5,19 +5,21 @@ on:
   workflow_dispatch:
 
 jobs:
+  check_changes:
+    uses: ./.github/workflows/check_diff.yml
+    with:
+      base_branch: production
+      compare_branch: main
+
   merge_to_production:
+    needs: check_changes
+    if: needs.check_changes.outputs.has_changes == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Check for changes between main and production
-        uses: ./.github/workflows/check_diff.yml
         with:
-          base_branch: production
-          compare_branch: main
-      - name: Exit if no changes
-        if: steps.check_diff.outputs.has_changes == 'false'
-        run: echo "No changes detected. Exiting workflow." && exit 0
+          fetch-depth: 0
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -36,9 +38,10 @@ jobs:
       - name: Merge to production branch
         run: |
           git config user.name "GitHub Actions"
-          git config user.email ""
-          git checkout -b production
-          git merge main --no-ff -m "Merge main into production"
+          git config user.email "actions@github.com"
+          git fetch origin production || git checkout -b production
+          git checkout production
+          git merge main --no-ff -m "Merge main into production - $(date)"
           git push origin production
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
