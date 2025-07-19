@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Check for changes between main and production
         id: check_diff
-        uses: ./.github/workflows/reusable/check_diff.yml
+        uses: ./.github/workflows/check_diff.yml
         with:
           base_branch: production
           compare_branch: main
