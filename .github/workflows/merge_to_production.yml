@@ -15,8 +15,18 @@ jobs:
       base_branch: production
       compare_branch: main
 
-  merge_to_production:
+  run_lint:
+    name: Run lint
     needs: check_changes
+    if: needs.check_changes.outputs.has_changes == 'true'
+    uses: ./.github/workflows/run_lint.yml
+  run_formatting:
+    name: Run formatting
+    needs: run_lint
+    uses: ./.github/workflows/run_format.yml
+
+  merge_to_production:
+    needs: [check_changes, run_lint, run_formatting]
     if: needs.check_changes.outputs.has_changes == 'true'
     runs-on: ubuntu-latest
     steps:
