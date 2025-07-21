@@ -27,7 +27,6 @@ jobs:
 
   merge_to_production:
     needs: [check_changes, run_lint, run_formatting]
-    if: needs.check_changes.outputs.has_changes == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
